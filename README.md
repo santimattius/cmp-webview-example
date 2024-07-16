@@ -1,4 +1,4 @@
-# KMP Compose Gradle Skeleton
+# WebView on Compose Multiplatform
 
 This is a Kotlin Multiplatform project targeting Android, iOS.
 
