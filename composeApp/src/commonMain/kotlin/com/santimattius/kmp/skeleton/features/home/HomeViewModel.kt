@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 data class HomeUiState(
     val isLoading: Boolean = false,
     val hasError: Boolean = false,
-    val data: Picture? = null,
+    val data: List<Picture> = emptyList()
 )
 
 class HomeViewModel(
@@ -35,7 +35,7 @@ class HomeViewModel(
     fun randomImage() {
         _state.update { it.copy(isLoading = true, hasError = false) }
         viewModelScope.launch(exceptionHandler) {
-            repository.random().onSuccess { picture ->
+            repository.getPictures().onSuccess { picture ->
                 _state.update { it.copy(isLoading = false, data = picture) }
             }.onFailure {
                 _state.update { it.copy(isLoading = false, hasError = true) }
