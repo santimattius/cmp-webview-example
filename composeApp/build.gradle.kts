@@ -69,6 +69,8 @@ kotlin {
             api(libs.koin.core)
             api(libs.koin.compose)
             api(libs.koin.composeViewModel)
+
+            api("io.github.kevinnzou:compose-webview-multiplatform:1.9.20")
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

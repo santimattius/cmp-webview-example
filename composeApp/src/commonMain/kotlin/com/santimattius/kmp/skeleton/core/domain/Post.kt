@@ -1,7 +1,9 @@
 package com.santimattius.kmp.skeleton.core.domain
 
-data class Picture(
+data class Post(
     val id: String,
-    val author: String,
+    val name: String,
+    val description: String,
+    val imageUrl: String,
     val url: String,
 )

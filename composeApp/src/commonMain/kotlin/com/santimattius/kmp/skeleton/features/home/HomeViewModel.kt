@@ -2,8 +2,8 @@ package com.santimattius.kmp.skeleton.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.santimattius.kmp.skeleton.core.data.PictureRepository
-import com.santimattius.kmp.skeleton.core.domain.Picture
+import com.santimattius.kmp.skeleton.core.data.PostRepository
+import com.santimattius.kmp.skeleton.core.domain.Post
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,11 +14,11 @@ import kotlinx.coroutines.launch
 data class HomeUiState(
     val isLoading: Boolean = false,
     val hasError: Boolean = false,
-    val data: List<Picture> = emptyList()
+    val data: List<Post> = emptyList()
 )
 
 class HomeViewModel(
-    private val repository: PictureRepository,
+    private val repository: PostRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeUiState())
@@ -35,7 +35,7 @@ class HomeViewModel(
     fun randomImage() {
         _state.update { it.copy(isLoading = true, hasError = false) }
         viewModelScope.launch(exceptionHandler) {
-            repository.getPictures().onSuccess { picture ->
+            repository.getPosts().onSuccess { picture ->
                 _state.update { it.copy(isLoading = false, data = picture) }
             }.onFailure {
                 _state.update { it.copy(isLoading = false, hasError = true) }
