@@ -14,18 +14,18 @@ fun Navigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Splash
+        startDestination = "splash"
     ) {
-        composable<Splash> {
+        composable(route = "splash") {
             SplashScreen {
                 with(navController) {
                     popBackStack()
-                    navigate(Home)
+                    navigate("home")
                 }
             }
         }
 
-        composable<Home> {
+        composable(route = "home") {
             HomeScreen()
         }
     }

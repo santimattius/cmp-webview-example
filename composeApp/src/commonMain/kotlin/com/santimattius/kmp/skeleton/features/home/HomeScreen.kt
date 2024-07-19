@@ -155,7 +155,8 @@ fun BottomSheet(post: Post, onDismiss: () -> Unit) {
                 )
             }
             WebView(
-                state
+                state = state,
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
