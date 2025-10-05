@@ -8,3 +8,9 @@ data object Splash
 
 @Serializable
 data object Home
+
+@Serializable
+data class Page(
+    val url: String,
+    val title: String
+)

@@ -5,7 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.santimattius.kmp.skeleton.features.home.HomeScreen
+import com.santimattius.kmp.skeleton.features.page.PageScreen
 import com.santimattius.kmp.skeleton.features.splash.SplashScreen
 
 @Composable
@@ -14,19 +16,29 @@ fun Navigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = Splash
     ) {
-        composable(route = "splash") {
+        composable<Splash> {
             SplashScreen {
                 with(navController) {
                     popBackStack()
-                    navigate("home")
+                    navigate(Home)
                 }
             }
         }
 
-        composable(route = "home") {
-            HomeScreen()
+        composable<Home> {
+            HomeScreen(onPostClick = { post ->
+                navController.navigate(Page(post.url, post.name))
+            })
+        }
+        composable<Page> { backStackEntry ->
+            val page = backStackEntry.toRoute<Page>()
+            PageScreen(
+                title = page.title,
+                url = page.url,
+                onBack = navController::popBackStack
+            )
         }
     }
 }

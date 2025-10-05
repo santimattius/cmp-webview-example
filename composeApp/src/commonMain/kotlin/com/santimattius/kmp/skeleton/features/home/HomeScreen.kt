@@ -53,6 +53,7 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @Composable
 fun HomeScreen(
     screenModel: HomeViewModel = koinViewModel<HomeViewModel>(),
+    onPostClick: (Post) -> Unit
 ) {
     val state by screenModel.state.collectAsStateWithLifecycle()
     Scaffold(
@@ -61,7 +62,7 @@ fun HomeScreen(
                 Icon(
                     Icons.Default.Refresh,
                     contentDescription = null,
-                    modifier = Modifier.clickable { screenModel.randomImage() }
+                    modifier = Modifier.clickable { screenModel.fetchPosts() }
                 )
             })
         },
@@ -79,7 +80,10 @@ fun HomeScreen(
 
                 else -> {
                     var select by remember { mutableStateOf<Post?>(null) }
-                    ListOfPosts(data = state.data) { post -> select = post }
+                    ListOfPosts(data = state.data) { post ->
+//                        select = post
+                        onPostClick(post)
+                    }
 
                     if (select != null) {
                         BottomSheet(post = select!!) { select = null }
